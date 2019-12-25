@@ -1,2 +1,4 @@
 # openHABdbTools
-Python tools for openHAB data base
+
+## Project purpose
+This data base tools written in Python can be used  with openHAB2 data bases.
