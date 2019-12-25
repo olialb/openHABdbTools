@@ -1,0 +1,22 @@
+//
+// example thing for openHABdbTools
+// Oliver Albold (2019)
+//
+
+//tracker definition with extra distance channel
+Thing gpstracker:tracker:ol "oliver" [trackerId="ol"] {
+    Channels:
+            Type regionDistance : homeDistance "Distance from Home" [
+                regionName="Home",
+                regionCenterLocation="XX.XXXXXXXX,XX.XXXXXXXX", //your home location
+                regionRadius=30,
+                accuracyThreshold=30
+            ]
+            Type regionDistance : workDistance "Distance from Work" [
+                regionName="Work",
+                regionCenterLocation="XX.XXXXXXXX,XX.XXXXXXXX", // work location
+                regionRadius=200,
+                accuracyThreshold=30
+            ]
+}
+

@@ -1,0 +1,18 @@
+//
+// example sitemap for openHABdbTools
+// Oliver Albold (2019)
+//
+
+sitemap gps label="GPS Tracker" {
+    Frame label="Oliver" {
+        Text item=batteryOliver icon="battery"
+        Text item=distanceHomeOliver
+        Text item=distanceWorkOliver
+        Switch item=OliverAtHome
+        Switch item=OliverAtWork
+        Text item=lastSeenOliver icon="time"
+        Text item=accuracyOliver
+        Text item=locationOliver icon="motion"
+        Mapview item=locationOliver height=10
+    }
+}

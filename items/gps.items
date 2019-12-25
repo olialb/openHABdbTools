@@ -1,0 +1,21 @@
+//
+// example items for openHABdbTools
+// Oliver Albold (2019)
+//
+
+Location	locationOliver	"Olivers Location [%2$s°N %3$s°E %1$sm]" {channel="gpstracker:tracker:ol:lastLocation"}
+String	locationOliverString "Location Oliver as String "
+Switch OliverAtHome "Oliver at home"
+Switch OliverAtWork "Oliver at work"
+
+DateTime	lastSeenOliver	"Last seen Oliver"		{channel="gpstracker:tracker:ol:lastReport"}
+Number		batteryOliver	"Battery level Oliver"		{channel="gpstracker:tracker:ol:batteryLevel"}
+Number:Length accuracyOliver	"GPS Accuracy Oliver [%d m]"		{channel="gpstracker:tracker:ol:gpsAccuracy"}
+Number:Length distanceHomeOliver "Distance from Home Oliver [%d m]"		{channel="gpstracker:tracker:ol:homeDistance"}
+Number:Length distanceWorkOliver "Distance from Work Oliver [%d m]"		{channel="gpstracker:tracker:ol:workDistance"}
+
+//linking switch item to regionTrigger channel. assuming the Home distance channel is defined in the binding config (see above)
+Switch atHomeOliver "Home presence Oliver" {channel="gpstracker:tracker:ol:regionTrigger" [profile="gpstracker:trigger-geofence", regionName="Home"]}
+
+//another switch for work region. assuming the OTWork is defined in OwnTracks application (no distance channel is needed like for Home)
+Switch atWorkOliver "Work presence Oliver" {channel="gpstracker:tracker:ol:regionTrigger" [profile="gpstracker:trigger-geofence", regionName="Work"]}
