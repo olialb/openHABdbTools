@@ -35,18 +35,18 @@ Download zip from this repository and copy all files to your openHAB config fold
 * Make sure that the python scripts in `/etc/openhab2/scripts` are executable
 
 ### Adapt GPS thinks and itmes to your needs
-* If you want to use GPS tracks
-  * Adapt your GPS locations and nameng to your needs in file `/etc/openhab2/things/gps.things.example` and rename it to `/etc/openhab2/things/gps.things`
-  * Adapt the nameng to your needs in files `/etc/openhab2/items/gps.items`
-  * Adapt the nameng and cron job timing to your needs in files `/etc/openhab2/rules/dbtools.rules.example`and renmae it to `/etc/openhab2/rules/dbtools.rules`
-  * Adapt the nameng to your needs in files `/etc/openhab2/stitemaps/gps.sitemap`
-  * Adapt your [persistance](https://www.openhab.org/docs/configuration/persistence.html) configuration that item *locationOliverString* (example) is tored in your data base on every change!"
-* If you **don't** want to use GPS Tracking
+* If you want to use GPS tracks:
+  * Adapt your GPS locations and naming to your needs in file `/etc/openhab2/things/gps.things.example` and rename it to `/etc/openhab2/things/gps.things`
+  * Adapt the naming to your needs in files `/etc/openhab2/items/gps.items`
+  * Adapt the naming and cron job timing to your needs in files `/etc/openhab2/rules/dbtools.rules.example` and rename it to `/etc/openhab2/rules/dbtools.rules`
+  * Adapt the naming to your needs in files `/etc/openhab2/stitemaps/gps.sitemap`
+  * Adapt your [persistance](https://www.openhab.org/docs/configuration/persistence.html) configuration, that item *locationOliverString* (example) is stored in your data base on every change!"
+* If you **don't** want to use GPS Tracking just do:
   * delete or rename `/etc/openhab2/items/gps.items`
   * disable (comment) `[dailyTracks1]` section in `/etc/openhab2/scripts/dbtools.ini` (see also 
 
 ### Adapt configuration to your needs:
-In `/etc/openhab2/scripts/dbtools.ini` you find the configuration of the project. First you need to configure your data base. Adapt *host* if you do not have a local installation and adapt *user*, *password* and *table* which us used by your openHAB instance:
+In `/etc/openhab2/scripts/dbtools.ini` you find the configuration of the python scripts. First you need to configure your data base. Adapt *host* if you do not have a local installation and adapt *user*, *password* and *table* which us used by your openHAB instance:
 
 ```ini
 [dbconfig]
@@ -62,7 +62,7 @@ user=openhab
 #openHAB data base password
 password=openhab	
 ```
-Than you need to configure where the created file shall be stored and which delimiter you want to use for Excel CVS files.
+Than you need to configure where the created file shall be stored and which delimiter you want to use for Excel CSV files.
 
 ```ini
 [root]
@@ -73,7 +73,7 @@ delimiter=;
 ```
   ---
 **Note:** 
-Excel versions for different countries load CVS files different. if you use a english Excel version the default delimiter ',' works fine. For german Excel versions you use better ';'. this can be set with the *delimiter=* value.
+Excel versions for different countries load CSV files different. if you use a english Excel version the default delimiter ',' works fine. For german Excel versions you use better ';'. this can be set with the *delimiter=* value.
 
 ```ini
 #uncomment this when you have a german Excel Version
@@ -82,7 +82,7 @@ Excel versions for different countries load CVS files different. if you use a en
 ---
 
 #### Data Base Maintenance feature
-In the *[maintenance]* section you can update the value how much history your data base should keep. The value of *days=90* means that the dbmaintenance will delete every 1. day in month all entries in the openHAB table which are older than *90* days.
+In the *[maintenance]* section you can update the value how much history your data base should keep. The value of *days=90* means that the dbmaintenance will delete every 1. day of the month all entries in the openHAB table which are older than *90* days.
 ```ini
 [maintenance]
 #number of days to keep in data base
@@ -90,7 +90,7 @@ days=90
 ```
 
 #### Statistic sheet feature
-with the script *dbStatistics.py* you can create a CSV table which contains the data of all your items and the data base index, how much entries they have in the data bases and the date and time of the oldest and newes entry in your DB. You can run this shript from command line. All the configuration is read from *dbtools.ini*. The created file is called *openHABdbStat.csv* and can be found in the configured root path (as standard is `/etc/openhab2/data/`). 
+With the script *dbStatistics.py* you can create a CSV table which contains the data of all your items and their data base index, how much entries they have in the data bases and the date and time of the oldest and newes entry in your DB. You can run this shript from command line. All the configuration is read from *dbtools.ini*. The created file is called *openHABdbStat.csv* and can be found in the configured root path (as standard is `/etc/openhab2/data/`). 
 The script does the following:
 
 * Request all items over the REST API from the localhost openHAB installation
@@ -114,14 +114,14 @@ name=Oliver
 This creates for every day a GPX file with the current date. Creation starts by default at 6am but can be changed in cron job configuration of rule *dbtools every day job* in file `/etc/openhab2/rules/dbtools.rules`. Tis config creates for example files like: `2019-12-24-Oliver.gpx` in directory `/etc/openhab2/data/Tracks/2019/12`
 
 ---
-**Note:** OpenHAB does not store GPS locations (item type *Location*) in the data base. You need to convert them to string and store this string over your persistance. This is done with the rule `store location` in file `/etc/openhab2/rules/dbtools.rules`. This rule is triggered by any location change. If you don't want to influence that accuracy of the way points in your track. Please adapt *AccuracyTheshhold* value (in meters). Only locations with an accoracy lower that this value are than stored in the data base.
+**Note:** OpenHAB does not store GPS locations (item type *Location*) in the data base. You need to convert them to string and store this string over your persistance. This is done with the rule `store location` in file `/etc/openhab2/rules/dbtools.rules`. This rule is triggered by any location change. If you want to adapt that accuracy of the way points in your tracks. Please adapt *AccuracyTheshhold* value (in meters). Only locations with an accuracy lower than this value are stored in the data base.
 
 ```javascript
 val Number AccuracyTheshhold = 100
 ```
 ---
 #### Monthly CSV files with Switch status
-You can create up to 9 different time sheets of different switches every month. This files are stored in [csv format](https://en.wikipedia.org/wiki/Comma-separated_values) and configured over the *[timeSheet**X**]* sections where **X** can be a number from 1-9.
+You can create up to 9 different time sheets of different switches every month. This files are stored in [csv format](https://en.wikipedia.org/wiki/Comma-separated_values) and configured over the *[timeSheet**X**]* sections where **X** can be a number from 1-9. This is useful to create your personal time sheet when you enter and leave work.
 
 ```ini
 [timeSheet1]
@@ -142,7 +142,7 @@ date=Date
 events=2
 ```
 
-This create for every month csv files like this: `/etc/openhab2/data/TimeSheet/2019/2019-12-AtWork.csv` for the switch item `OliverAtWork`
+This example creates for every month CSV files like this: `/etc/openhab2/data/TimeSheet/2019/2019-12-AtWork.csv` for the switch item `OliverAtWork`
 The sheet containe a row for every day with a number of ON<->OFF events (here *events=2*) and a total time where the switch was in state ON.
 With on=,off=,total= and date= the naming of the colums can be adapted. This example configuration will look like this:
 
@@ -152,6 +152,4 @@ With on=,off=,total= and date= the naming of the colums can be adapted. This exa
 | 2019-12-01 | 08:49 | 12:18 | 12:38 | 18:25 | 9.25 h |
 | ... |  |  |       |       |... |
 | Working hours |  |  |       |       | 17.70h |
-
-
 
