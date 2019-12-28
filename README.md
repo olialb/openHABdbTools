@@ -7,6 +7,7 @@ The scritps support:
 * **Data Base Maintenace**:
   * Deleteing of all entries from data base which are older than a configurable number of days
   * Calculating the data base size
+  * Create data bases statistic sheet with all you items and how much data they have stored in the [openHAB2](https://www.openhab.org) data base
 
 * **Creating Timesheets** of switch items. Together with GPS tracking this can be used to show entring and leaving of configured GPS areas but it can also for other use cases: (How long my Kitchen Light switched on every day?). 
   * Creating monthly CSV files from data base entries for [openHAB2](https://www.openhab.org) [switch items](https://www.openhab.org/docs/configuration/items.html)
@@ -61,6 +62,25 @@ user=openhab
 #openHAB data base password
 password=openhab	
 ```
+Than you need to configure where the created file shall be stored and which delimiter you want to use for Excel CVS files.
+
+```ini
+[root]
+#root path for all created files
+path=/etc/openhab2/data/
+#uncomment this when you have a german Excel Version. default is ','
+delimiter=;
+```
+  ---
+**Note:** 
+Excel versions for different countries load CVS files different. if you use a english Excel version the default delimiter ',' works fine. For german Excel versions you use better ';'. this can be set with the *delimiter=* value.
+
+```ini
+#uncomment this when you have a german Excel Version
+#delimiter=;
+```
+---
+
 #### Data Base Maintenance feature
 In the *[maintenance]* section you can update the value how much history your data base should keep. The value of *days=90* means that the dbmaintenance will delete every 1. day in month all entries in the openHAB table which are older than *90* days.
 ```ini
@@ -75,7 +95,7 @@ You can create up to 9 different gps tracks of different users every day. This f
 ```ini
 [dailyTrack1]
 #path where the tracks are stored
-path=/etc/openhab2/data/Tracks/
+path=Tracks/
 #item to create daily track (must be of type string)
 item=locationOliverString
 #name for this tracks. Used only in GPX filenames.
@@ -97,13 +117,11 @@ You can create up to 9 different time sheets of different switches every month. 
 ```ini
 [timeSheet1]
 #path where the time sheet ist strored
-path=/etc/openhab2/data/TimeSheet/
+path=TimeSheet/
 #item to create time sheet (must be of type switch)
 item=OliverAtWork
 #name of the timesheet. Used in CSV filenames.
 name=AtWork
-#uncomment this when you have a german Excel Version
-delimiter=;
 #column names for switch states (default: "on"/"off")
 on=Enter
 off=Leave
@@ -126,14 +144,5 @@ With on=,off=,total= and date= the naming of the colums can be adapted. This exa
 | ... |  |  |       |       |... |
 | Working hours |  |  |       |       | 17.70h |
 
-  ---
-**Note:** 
-Excel versions for different countries load CVS files different. if you use a english Excel version the default delimiter ',' works fine. For german Excel versions you use better ';'. this can be set with the *delimiter=* value.
-
-```ini
-#uncomment this when you have a german Excel Version
-#delimiter=;
-```
----
 
 

@@ -12,12 +12,31 @@
 
 
 import configparser
+import MySQLdb
+import os
 from StringIO import StringIO
 
+#change here the location of the config file:
 configFile = '/etc/openhab2/scripts/dbtools.ini'
 
 parser = configparser.ConfigParser()
 parser.read(configFile)
+
+#section root
+try:
+	rootPath = parser['root']
+	try:
+		rootPath = parser['root']['path']
+	except:
+		print ("Error w	ith 'path=' not defined in dbtools.cfg [root] section" )
+		quit()
+	try:
+		delimiter = parser['root']['delimiter']
+	except:
+		delimiter = ','
+except:
+	rootPath = '/etc/openhab2/data'
+	delimiter = ','
 
 #section dbconfig	
 try:
@@ -52,6 +71,7 @@ except:
 	quit()
 
 
+
 #section timesheet1-9
 class cTimeSheet:
 	def __init__(self):
@@ -76,14 +96,10 @@ for ts in range(1,10):
 			print ("Error with 'item=' not defined in dbtools.cfg [%s] section" % tsName )
 			quit()
 		try:
-			timeSheets[-1].path = parser[tsName]['path']
+			timeSheets[-1].path = os.path.join(rootPath,parser[tsName]['path'])
 		except:
 			print ("Error with 'name=' not defined in dbtools.cfg [%s] section" % tsName )
 			quit()
-		try:
-			timeSheets[-1].delimiter = parser[tsName]['delimiter']
-		except:
-			timeSheets[-1].delimiter = ','
 		try:
 			timeSheets[-1].on = parser[tsName]['on']
 		except:
@@ -130,12 +146,21 @@ for t in range(1,10):
 			print ("Error with 'item=' not defined in dbtools.cfg [%s] section" % tName )
 			quit()
 		try:
-			tracks[-1].path = parser[tName]['path']
+			tracks[-1].path = os.path.join(rootPath,parser[tName]['path'])
 		except:
 			print ("Error with 'name=' not defined in dbtools.cfg [%s] section" % tName )
 			quit()
 	
+#open the configure data base
+def openDataBase():
+	db = MySQLdb.connect (host = dbHost, 	# your host, usually localhost
+						user = dbUser,		# your username
+						passwd = dbPassWord,	# your password
+						db = dbTable)		# name of the data base
+	return db								
 
-
+#close the configured data base
+def closeDataBase(db):
+	db.close()
 
 

@@ -16,13 +16,9 @@ import dbtoolsconfig as config
 keep =  config.dbDays #number of days to keep
 interval = "where cast(time as date) < DATE_SUB(NOW(), INTERVAL %d DAY)" % keep
 
-db = MySQLdb.connect (host = config.dbHost, 	# your host, usually localhost
-                      user = config.dbUser,		# your username
-                      passwd = config.dbPassWord,	# your password
-                      db = config.dbTable)		# name of the data base
-							  
-# you must create a Cursor object. It will let
-#  you execute all the queries you need
+#open tha data base
+db = config.openDataBase()
+# you must create a Cursor object. It will let you execute all the queries you need
 cur = db.cursor()
 
 # get all item tables
@@ -58,7 +54,6 @@ print ("Problem entries:")
 for itemName in problem_entries:
 	print("itemname='%s';"%(itemName))
 
-db.close()
-
+#cleanup
+config.closeDataBase(db)
 sys.exit(totalDeleteCount)
-

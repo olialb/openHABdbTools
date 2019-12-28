@@ -14,15 +14,6 @@ import csv
 import datetime
 import dbtoolsconfig as config
 
-db = MySQLdb.connect (host = config.dbHost, 	# your host, usually localhost
-                      user = config.dbUser,		# your username
-                      passwd = config.dbPassWord,	# your password
-                      db = config.dbTable)		# name of the data base
-							  
-# you must create a Cursor object. It will let
-#  you execute all the queries you need
-cur = db.cursor()
-
 def closeCvs(file):
 	if file != None:
 		file.close()
@@ -60,7 +51,7 @@ def createTimeSheet ( root, name , delimiter, columns, cur ):
 					
 		#create new file if necessary
 		if date.month != month:
-			#first close exitiong file
+			#first close existing file
 			closeCvs(file)
 			file = None
 			day=0
@@ -140,6 +131,11 @@ def createTimeSheet ( root, name , delimiter, columns, cur ):
 	#finally close last track
 	closeCvs(file)
 
+#open tha data base
+db = config.openDataBase()
+# you must create a Cursor object. It will let you execute all the queries you need
+cur = db.cursor()
+
 #search the corresponding items for the tracks 
 for timeSheet in config.timeSheets:
 	# get all item table name
@@ -166,8 +162,9 @@ for timeSheet in config.timeSheets:
 		columns.append(timeSheet.off)
 	columns.append(timeSheet.total)
 	
-	createTimeSheet( timeSheet.path, timeSheet.name, str(timeSheet.delimiter), columns, cur )
+	createTimeSheet( timeSheet.path, timeSheet.name, str(config.delimiter), columns, cur )
 
-db.close()
+config.closeDataBase(db)
+
 
 

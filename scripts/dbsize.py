@@ -10,13 +10,9 @@ import MySQLdb
 import sys
 import dbtoolsconfig as config
 
-db = MySQLdb.connect (host = config.dbHost, 	# your host, usually localhost
-                      user = config.dbUser,		# your username
-                      passwd = config.dbPassWord,	# your password
-                      db = config.dbTable)		# name of the data base
-							  
-# you must create a Cursor object. It will let
-#  you execute all the queries you need
+#open tha data base
+db = config.openDataBase()
+# you must create a Cursor object. It will let you execute all the queries you need
 cur = db.cursor()
 
 # get size of openhab
@@ -29,7 +25,7 @@ for item in cur.fetchall():
 		print("OpenHAB database size %.2fMB" % (item[1]))
 		size = item[1]
 
-db.close()
-
+#cleanup
+config.closeDataBase(db)
 sys.exit(size)
 

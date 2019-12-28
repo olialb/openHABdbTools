@@ -46,15 +46,6 @@ gpxPoint= """<trkpt lat="%s" lon="%s">
 </trkpt>
 """
 
-db = MySQLdb.connect (host = config.dbHost, 	# your host, usually localhost
-                      user = config.dbUser,		# your username
-                      passwd = config.dbPassWord,	# your password
-                      db = config.dbTable)		# name of the data base
-							  
-# you must create a Cursor object. It will let
-#  you execute all the queries you need
-cur = db.cursor()
-
 def closeTrack( file ):
 	if file != None:
 		#write footer
@@ -111,6 +102,12 @@ def createTracks ( root, name ,cur ):
 	#finally close last track
 	closeTrack(file)
 
+
+#open tha data base
+db = config.openDataBase()
+# you must create a Cursor object. It will let you execute all the queries you need
+cur = db.cursor()
+
 #search the corresponding items for the tracks 
 for track in config.tracks:
 	# get all item table name
@@ -133,6 +130,6 @@ for track in config.tracks:
 	#print len(cur.fetchall())
 	createTracks( track.path, track.name, cur )
 
-db.close()
+config.closeDataBase(db)
 
 
