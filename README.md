@@ -89,6 +89,15 @@ In the *[maintenance]* section you can update the value how much history your da
 days=90
 ```
 
+#### Statistic sheet feature
+with the script *dbStatistics.py* you can create a CSV table which contains the data of all your items and the data base index, how much entries they have in the data bases and the date and time of the oldest and newes entry in your DB. You can run this shript from command line. All the configuration is read from *dbtools.ini*. The created file is called *openHABdbStat.csv* and can be found in the configured root path (as standard is `/etc/openhab2/data/`). 
+The script does the following:
+
+* Request all items over the REST API from the localhost openHAB installation
+* Read all entries from the openHAB data base
+* Add all active items seen on REST API to the table and check how many data is in the data base for each item
+* Finally add also the items from the data dase to the table which are not active in openHAB anymore (old deleted or renamed items)
+
 #### GPS Track creating feature
 You can create up to 9 different gps tracks of different users every day. This files are stored in [gpx format](https://de.wikipedia.org/wiki/GPS_Exchange_Format) and configured over the *[dailyTrack**X**]* sections where **X** can be a number from 1-9.
 
