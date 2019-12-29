@@ -153,3 +153,9 @@ With on=,off=,total= and date= the naming of the colums can be adapted. This exa
 | ... |  |  |       |       |... |
 | Working hours |  |  |       |       | 17.70h |
 
+## More detailed descriptions can be found here:
+
+* [Data Base Maintenance](http://albold-home.de/openhab2-database-maintenance/)
+* [Data Base Statistics Sheet](http://albold-home.de/openhab2-database-overview-sheet-creation/)
+* [OpenHAB2 presence tracking with GPS](http://albold-home.de/owner-presence-tracking-with-openhab/)
+
