@@ -73,7 +73,7 @@ delimiter=;
 ```
   ---
 **Note:** 
-Excel versions for different countries load CSV files different. if you use a english Excel version the default delimiter ',' works fine. For german Excel versions you use better ';'. this can be set with the *delimiter=* value.
+Excel versions for different countries load CSV files different. if you use a English Excel version the default delimiter ',' works fine. For German Excel versions you use better ';'. this can be set with the *delimiter=* value.
 
 ```ini
 #uncomment this when you have a german Excel Version
@@ -82,7 +82,7 @@ Excel versions for different countries load CSV files different. if you use a en
 ---
 
 #### Data Base Maintenance feature
-In the *[maintenance]* section you can update the value how much history your data base should keep. The value of *days=90* means that the dbmaintenance will delete every 1. day of the month all entries in the openHAB table which are older than *90* days.
+In the *[maintenance]* section you can update the value how much history your data base should keep. The value of *days=90* means that the dbmaintenance will delete every 1st day of the month all entries in the openHAB table which are older than *90* days.
 ```ini
 [maintenance]
 #number of days to keep in data base
@@ -90,13 +90,13 @@ days=90
 ```
 
 #### Statistic sheet feature
-With the script *dbStatistics.py* you can create a CSV table which contains the data of all your items and their data base index, how much entries they have in the data bases and the date and time of the oldest and newes entry in your DB. You can run this shript from command line. All the configuration is read from *dbtools.ini*. The created file is called *openHABdbStat.csv* and can be found in the configured root path (as standard is `/etc/openhab2/data/`). 
+With the script *dbStatistics.py* you can create a CSV table which contains the data of all your items and their data base index, how much entries they have in the data bases and the date and time of the oldest and newest entry in your DB. You can run this script from command line. All the configuration is read from *dbtools.ini*. The created file is called *openHABdbStat.csv* and can be found in the configured root path (as standard is `/etc/openhab2/data/`). 
 The script does the following:
 
 * Request all items over the REST API from the localhost openHAB installation
 * Read all entries from the openHAB data base
 * Add all active items seen on REST API to the table and check how many data is in the data base for each item
-* Finally add also the items from the data dase to the table which are not active in openHAB anymore (old deleted or renamed items)
+* Finally add also the items from the database to the table which are not active in openHAB any more (old deleted or renamed items)
 
 #### GPS Track creating feature
 You can create up to 9 different gps tracks of different users every day. This files are stored in [gpx format](https://de.wikipedia.org/wiki/GPS_Exchange_Format) and configured over the *[dailyTrack**X**]* sections where **X** can be a number from 1-9.

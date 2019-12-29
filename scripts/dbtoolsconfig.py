@@ -64,11 +64,12 @@ except:
 	quit()
 	
 #dection maintenance
+
 try:
 	dbDays = int(parser['maintenance']['days'])
 except:
-	print ("Error with 'days=' not defined in dbtools.cfg [maintenance] section" )
-	quit()
+	#not defined!
+	dbDays = -1
 
 
 

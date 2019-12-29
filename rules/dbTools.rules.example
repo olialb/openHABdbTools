@@ -16,7 +16,6 @@ then
 	if( (lastLocationOliver != locationOliver.state.toString) && (accuracy < AccuracyTheshhold) ) {
 		locationOliverString.postUpdate(locationOliver.state.toString)
 		lastLocationOliver = locationOliver.state.toString
-		//sendTelegram("homeffmbot", locationOliverString.state.toString )
 	}
 end
 
@@ -41,7 +40,7 @@ rule "DBMaintenance"
 when 
 	Time cron "0 0 0 1 * ?"   // Frist day of a month 0:00 am
 then
-    val String result = executeCommandLine("/etc/openhab2/scripts/dbmaintanence.py",10000)
+    val String result = executeCommandLine("/etc/openhab2/scripts/dbmaintanence.py",30000)
     logInfo( "DBTools monthly", result)
 end
 

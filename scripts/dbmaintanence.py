@@ -14,6 +14,10 @@ import dbtoolsconfig as config
 
 #define the month interval. Everything whats older will be deleted
 keep =  config.dbDays #number of days to keep
+if(keep < 0):
+	print("Please configure days=X in [maintenance] section in dbTools.ini!")
+	quit()
+
 interval = "where cast(time as date) < DATE_SUB(NOW(), INTERVAL %d DAY)" % keep
 
 #open tha data base
