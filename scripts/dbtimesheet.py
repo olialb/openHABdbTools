@@ -51,10 +51,19 @@ def createTimeSheet ( root, name , delimiter, columns, cur ):
 					
 		#create new file if necessary
 		if date.month != month:
-			#first close existing file
-			closeCvs(file)
-			file = None
-			day=0
+			if file != None:
+				#write last row
+				c = [ columns[-1] ]
+				while( len(c) < (numberOfEvents*2)+1):
+					c.append("")
+				c.append( "%.2f h" % convertDTtoHours( totalTime ))
+				cvsWriter.writerow(c)				
+				#close existing file
+				closeCvs(file)
+				file = None
+				totalTime = None
+				day=0
+				c=[]	
 				
 			#open new file
 			month = date.month
@@ -72,7 +81,7 @@ def createTimeSheet ( root, name , delimiter, columns, cur ):
 			#check for new 
 			if day != date.day:
 				if len(c) > 0:
-					#write last row first before you cantinue with new one
+					#write last row first before you continue with new one
 					while( len(c) < (numberOfEvents*2)+1):
 						c.append("")
 					c.append( "%.2f h" % convertDTtoHours( timeDelta ) )
@@ -107,27 +116,14 @@ def createTimeSheet ( root, name , delimiter, columns, cur ):
 					currentState=state
 				if currentState == 'OFF':
 					currentEvent=currentEvent+1
-				
-
 		#continue with next way point
-	#write last row
-	if len(c) > 0:
-		#write last row first before you cantinue with new one
-		while( len(c) < (numberOfEvents*2)+1):
-			c.append("")
-		c.append( "%.2f h" % convertDTtoHours( timeDelta ) )
-		cvsWriter.writerow(c)		
-		#write total time row.
-		if totalTime==None:
-			totalTime=timeDelta
-		else:
-			totalTime=totalTime+timeDelta
-		c = [ columns[-1] ]
-		while( len(c) < (numberOfEvents*2)+1):
-			c.append("")
-		c.append( "%.2f h" % convertDTtoHours( totalTime ))
-		cvsWriter.writerow(c)		
 		
+	#write last row
+	c = [ columns[-1] ]
+	while( len(c) < (numberOfEvents*2)+1):
+		c.append("")
+	c.append( "%.2f h" % convertDTtoHours( totalTime ))
+	cvsWriter.writerow(c)				
 	#finally close last track
 	closeCvs(file)
 

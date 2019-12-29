@@ -116,7 +116,7 @@ for ts in range(1,10):
 		try:
 			timeSheets[-1].date = parser[tsName]['date']
 		except:
-			timeSheets[-1].total = 'date'
+			timeSheets[-1].date = 'date'
 		timeSheets[-1].events = int(parser[tsName]['events'])
 		try:
 			timeSheets[-1].events = int(parser[tsName]['events'])
