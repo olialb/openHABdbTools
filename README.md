@@ -2,14 +2,14 @@
 
 ## Purpose of this little project
 This data base tools written in Python can be used  with [openHAB2](https://www.openhab.org) data bases.
-The scritps support:
+The scripts are supporting:
 
-* **Data Base Maintenace**:
-  * Deleteing of all entries from data base which are older than a configurable number of days
-  * Calculating the data base size
+* **Data Base Maintenance**:
+  * Deleting of all entries from data base which are older than a configurable number of days
+  * Calculation of the data base size
   * Create data bases statistic sheet with all you items and how much data they have stored in the [openHAB2](https://www.openhab.org) data base
 
-* **Creating Timesheets** of switch items. Together with GPS tracking this can be used to show entring and leaving of configured GPS areas but it can also for other use cases: (How long my Kitchen Light switched on every day?). 
+* **Creating Timesheets** of switch items. Together with GPS tracking this can be used to show entering and leaving of configured GPS areas but it can also for other use cases: (How long my Kitchen Light switched on every day?). 
   * Creating monthly CSV files from data base entries for [openHAB2](https://www.openhab.org) [switch items](https://www.openhab.org/docs/configuration/items.html)
 
 * **GPS Tracking** of openHAB users
@@ -22,7 +22,7 @@ The following features must be supported by your [openHAB2](https://www.openhab.
 * [openHAB2](https://www.openhab.org) installation (tested with 2.4 or newer)
 * Instance must be connected to [myopenhab](https://myopenhab.org/) with [openHAB cloud connector](https://www.openhab.org/addons/integrations/openhabcloud/)
 * Running [persistance](https://www.openhab.org/docs/configuration/persistence.html) with SQL data base (tested with [mariadb](https://mariadb.org/) over [jdbc data persistance](https://www.openhab.org/addons/persistence/jdbc/))
-* Python installation on [openHAB2](https://www.openhab.org) server with the following additonal python packages
+* Python installation on [openHAB2](https://www.openhab.org) server with the following additional python packages
   * mysqldb (Install with `sudo apt-get install python-mysqldb` please)
 * If you want to use the gps tracking scripts you need the [openHAB gps tracking addon](https://www.openhab.org/addons/bindings/gpstracker/) and for example [Owntracks mobile app](https://owntracks.org/) to send your location to your [openHAB2](https://www.openhab.org) instance.
 
@@ -30,7 +30,7 @@ The following features must be supported by your [openHAB2](https://www.openhab.
 You must do the following steps to install this project on your [openHAB2](https://www.openhab.org) system.
 
 ### Copy files to your system
-Download zip from this repository and copy all files to your openHAB config folder located at `/etc/openhab2`. Than:
+Download zip from this repository and copy all files to your openHAB config folder located at `/etc/openhab2`. Then:
 * Make sure that the files are readable for your openHAB user
 * Make sure that the python scripts in `/etc/openhab2/scripts` are executable
 
@@ -73,7 +73,7 @@ delimiter=;
 ```
   ---
 **Note:** 
-Excel versions for different countries load CSV files different. if you use a English Excel version the default delimiter ',' works fine. For German Excel versions you use better ';'. this can be set with the *delimiter=* value.
+Excel versions for different countries load CSV files different. if you use a English Excel version the default delimiter ',' works fine. For German Excel versions you use better ';'. This can be set with the *delimiter=* value.
 
 ```ini
 #uncomment this when you have a german Excel Version
@@ -99,7 +99,7 @@ The script does the following:
 * Finally add also the items from the database to the table which are not active in openHAB any more (old deleted or renamed items)
 
 #### GPS Track creating feature
-You can create up to 9 different gps tracks of different users every day. This files are stored in [gpx format](https://de.wikipedia.org/wiki/GPS_Exchange_Format) and configured over the *[dailyTrack**X**]* sections where **X** can be a number from 1-9.
+You can create up to 9 different GPS tracks of different users every day. This files are stored in [gpx format](https://de.wikipedia.org/wiki/GPS_Exchange_Format) and configured over the *[dailyTrack**X**]* sections where **X** can be a number from 1-9.
 
 ```ini
 [dailyTrack1]
@@ -114,10 +114,10 @@ name=Oliver
 This creates for every day a GPX file with the current date. Creation starts by default at 6am but can be changed in cron job configuration of rule *dbtools every day job* in file `/etc/openhab2/rules/dbtools.rules`. Tis config creates for example files like: `2019-12-24-Oliver.gpx` in directory `/etc/openhab2/data/Tracks/2019/12`
 
 ---
-**Note:** OpenHAB does not store GPS locations (item type *Location*) in the data base. You need to convert them to string and store this string over your persistance. This is done with the rule `store location` in file `/etc/openhab2/rules/dbtools.rules`. This rule is triggered by any location change. If you want to adapt that accuracy of the way points in your tracks. Please adapt *AccuracyTheshhold* value (in meters). Only locations with an accuracy lower than this value are stored in the data base.
+**Note:** OpenHAB does not store GPS locations (item type *Location*) in the data base. You need to convert them to string and store this string over your persistence. This is done with the rule `store location` in file `/etc/openhab2/rules/dbtools.rules`. This rule is triggered by any location change. If you want to adapt that accuracy of the way points in your tracks. Please adapt *AccuracyTheshhold* value (in meters). Only locations with an accuracy lower than this value are stored in the data base.
 
 ```javascript
-val Number AccuracyTheshhold = 100
+val Number AccuracyThreshold = 100
 ```
 ---
 #### Monthly CSV files with Switch status
@@ -143,8 +143,8 @@ events=2
 ```
 
 This example creates for every month CSV files like this: `/etc/openhab2/data/TimeSheet/2019/2019-12-AtWork.csv` for the switch item `OliverAtWork`
-The sheet containe a row for every day with a number of ON<->OFF events (here *events=2*) and a total time where the switch was in state ON.
-With on=,off=,total= and date= the naming of the colums can be adapted. This example configuration will look like this:
+The sheet contains a row for every day with a number of ON<->OFF events (here *events=2*) and a total time where the switch was in state ON.
+With on=,off=,total= and date= the naming of the columns can be adapted. This example configuration will look like this:
 
 | Date     | Enter | Leave | Enter | Leave | Working hours |
 |----------|:-------:|------:|------:|------:|------:|

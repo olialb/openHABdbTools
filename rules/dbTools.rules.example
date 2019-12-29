@@ -4,7 +4,7 @@
 //
 
 var String lastLocationOliver = "0"
-val Number AccuracyTheshhold = 100
+val Number AccuracyThreshold = 100
 
 /* store location in string for later processing */
 rule "Store location"
@@ -13,7 +13,7 @@ Item locationOliver received update
 then
 	var Number accuracy = (accuracyOliver.state as QuantityType<Number>).doubleValue
 	// Store only different values with a good accuracy!
-	if( (lastLocationOliver != locationOliver.state.toString) && (accuracy < AccuracyTheshhold) ) {
+	if( (lastLocationOliver != locationOliver.state.toString) && (accuracy < AccuracyThreshold) ) {
 		locationOliverString.postUpdate(locationOliver.state.toString)
 		lastLocationOliver = locationOliver.state.toString
 	}
