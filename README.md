@@ -158,4 +158,6 @@ With on=,off=,total= and date= the naming of the columns can be adapted. This ex
 * [Data Base Maintenance](http://albold-home.de/openhab2-database-maintenance/)
 * [Data Base Statistics Sheet](http://albold-home.de/openhab2-database-overview-sheet-creation/)
 * [OpenHAB2 presence tracking with GPS](http://albold-home.de/owner-presence-tracking-with-openhab/)
+* [Creating GPX Tracks with OpenHAB persistence](https://albold-home.de/create-gpx-tracks-with-openhab2-presence-detection/)
+* [Creating time sheets with OpenHAB persistence](https://albold-home.de/create-time-sheets-with-openhab2-persistence/)
 
