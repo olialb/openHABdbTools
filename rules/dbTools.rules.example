@@ -30,7 +30,7 @@ then
     if(result != "") {
 	    logInfo( "DbTools daily", result)
     }
-    result = executeCommandLine("/etc/openhab2/scripts/dbtimescheet.py",10000)
+    result = executeCommandLine("/etc/openhab2/scripts/dbtimesheet.py",10000)
     if (result != "") {
 	    logInfo( "DbTools daily", result)
     }
