@@ -118,7 +118,25 @@ def createTimeSheet ( root, name , delimiter, columns, cur ):
 					currentEvent=currentEvent+1
 		#continue with next way point
 		
-	#write last row
+	#finish last row
+	if len(c) > 0:
+		#write last row first before you continue with new one
+		while( len(c) < (numberOfEvents*2)+1):
+			c.append("")
+		c.append( "%.2f h" % convertDTtoHours( timeDelta ) )
+		cvsWriter.writerow(c)
+		if totalTime==None:
+			totalTime=timeDelta
+		else:
+			totalTime=totalTime+timeDelta
+	day = date.day
+	#create datetime at 00:00 this day:
+	lastTime = datetime.datetime.strptime('%04d%02d%02d' % (year,month,day), '%Y%m%d')
+	timeDelta = datetime.timedelta(0)
+	currentState=None
+	c = ["%04d-%02d-%02d" % (year,month,day)]
+	currentEvent=0
+	#write final row with total sum
 	c = [ columns[-1] ]
 	while( len(c) < (numberOfEvents*2)+1):
 		c.append("")
