@@ -12,13 +12,13 @@ The scripts are supporting:
 
 * **[openHAB](https://www.openhab.org) Database Backup and Restore**:
   * DBBackup.py:
-    * Reads all exiting items from [openHAB](https://www.openhab.org) over REST API and identifies the matching SQL tables with data
-    * Write the data of each item to a json file with the names and types of the item
-    * Zip all data to file with with timestamp in the name
+    * Reads all exiting items from [openHAB](https://www.openhab.org) over REST API and identifies the matching SQL tables with the data
+    * Write the data of each item to a json file, with the names and types of the item in the file name
+    * Zips all data to file with with timestamp in the name
   * DBRestore.py dbBackup_XXXXXXX.zip:
-    * Precondition: New [openHAB](https://www.openhab.org) installation already running and items tables exist in data base (openHAB started ones)
-    * Reads all exiting items from [openHAB](https://www.openhab.org) over REST API, identifies the matching SQL tables with data and matching json file from backup zip
-    * Write the data from the json file to the new corresponding table
+    * Precondition: New [openHAB](https://www.openhab.org) installation already running and items tables exist in the data base (openHAB started ones)
+    * Reads all exiting items from [openHAB](https://www.openhab.org) over REST API, identifies the matching SQL tables with data and the matching json file from the given backup zipfile. Background: The table names are diffrent in the data base, but they are found over the item name and type. Only if both 100% matches the data is used.
+    * Write the data from the json file to the new corresponding tables
 
 * **Creating Timesheets** of switch items. Together with GPS tracking this can be used to show entering and leaving of configured GPS areas but it can also for other use cases: (How long my Kitchen Light switched on every day?). 
   * Creating monthly CSV files from data base entries for [openHAB](https://www.openhab.org) [switch items](https://www.openhab.org/docs/configuration/items.html)
