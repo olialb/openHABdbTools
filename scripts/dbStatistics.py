@@ -104,7 +104,7 @@ for elem in openHabItemsREST:
 			value = elem[column]
 		except:
 			value = ""
-		if isinstance(value,unicode):
+		if isinstance(value, bytearray):
 			#double check that unicode string does not contain characters which can not be used in csv files
 			value=value.encode('utf-8',errors='replace')
 		else:

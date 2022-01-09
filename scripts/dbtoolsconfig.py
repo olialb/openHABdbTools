@@ -14,10 +14,18 @@
 import configparser
 import MySQLdb
 import os
-from StringIO import StringIO
+import sys
+
+try:
+	from StringIO import StringIO ## Python2
+except ImportError:
+	from io import StringIO ## Python 3
+	
+#flag to make script silent
+silent = False
 
 #change here the location of the config file:
-configFile = '/etc/openhab2/scripts/dbtools.ini'
+configFile = '/etc/openhab/scripts/dbtools.ini'
 
 parser = configparser.ConfigParser()
 parser.read(configFile)
@@ -163,5 +171,13 @@ def openDataBase():
 #close the configured data base
 def closeDataBase(db):
 	db.close()
-
+	
+#check command line arguments
+def checkargs():
+	global silent
+	try:
+		sys.argv[1] == "-s" or sys.argv[1] == "--silent"
+		silent = True
+	except:
+		silent = False
 

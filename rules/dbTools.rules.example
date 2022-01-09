@@ -5,6 +5,7 @@
 
 var String lastLocationOliver = "0"
 val Number AccuracyThreshold = 100
+val String ScriptPath = "/etc/openhab/scripts/" //change to "/etc/openhab2/scripts/" in case of OH2
 
 /* store location in string for later processing */
 rule "Store location"
@@ -23,14 +24,14 @@ rule "dbtools every day job"
 when 
   	Time cron "0 0 6 * * ?"   // Every day 6:00 hours
 then
-    var String result = executeCommandLine("/etc/openhab2/scripts/dbsize.py",10000)
+    var String result = executeCommandLine("/etc/openhab/scripts/dbsize.py",10000)
     logInfo( "DbTools daily", result)
 
-    result = executeCommandLine("/etc/openhab2/scripts/dbtracks.py",10000)
+    result = executeCommandLine("/etc/openhab/scripts/dbtracks.py",10000)
     if(result != "") {
 	    logInfo( "DbTools daily", result)
     }
-    result = executeCommandLine("/etc/openhab2/scripts/dbtimesheet.py",10000)
+    result = executeCommandLine("/etc/openhab/scripts/dbtimesheet.py",10000)
     if (result != "") {
 	    logInfo( "DbTools daily", result)
     }
@@ -40,7 +41,7 @@ rule "DBMaintenance"
 when 
 	Time cron "0 0 0 1 * ?"   // Frist day of a month 0:00 am
 then
-    val String result = executeCommandLine("/etc/openhab2/scripts/dbmaintanence.py",30000)
+    val String result = executeCommandLine("/etc/openhab/scripts/dbmaintanence.py",30000)
     logInfo( "DBTools monthly", result)
 end
 

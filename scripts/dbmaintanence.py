@@ -32,6 +32,9 @@ cur.execute("SELECT * FROM items")
 totalDeleteCount = 0
 problem_entries = []
 
+#evaluate command line arguments
+config.checkargs()
+
 # go over all entries of 'items' table
 for item in cur.fetchall():
 	#select all old entries
@@ -42,7 +45,8 @@ for item in cur.fetchall():
 		mylist = cur.fetchall()
 		n = len(mylist)
 		if n > 0: #are there old entries?
-			print ("[%s,item%04d] delete %d old entries" % (item[1], item[0], n))
+			if not config.silent:
+				print ("[%s,item%04d] delete %d old entries" % (item[1], item[0], n))
 			totalDeleteCount = totalDeleteCount + n;
 			#finally delete old entries and otimize the table
 			cur.execute("DELETE FROM item%04d %s" % (item[0],interval))
@@ -52,12 +56,13 @@ for item in cur.fetchall():
 		problem_entries.append( item[1] )
 
 #print total
-print ("In total [%d] %d day old entries deleted." % (totalDeleteCount,keep))
+print ("%d entries deleted witch are older than %d days." % (totalDeleteCount,keep))
 
-print ("Problem entries:")
-for itemName in problem_entries:
-	print("itemname='%s';"%(itemName))
+print ("Problem entries: %d" % len(problem_entries))
+if not config.silent:
+	for itemName in problem_entries:
+		print("itemname='%s';"%(itemName))
 
 #cleanup
 config.closeDataBase(db)
-sys.exit(totalDeleteCount)
+sys.exit(0)

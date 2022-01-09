@@ -10,6 +10,7 @@
 import MySQLdb
 import sys
 import os
+from geopy import distance
 import dbtoolsconfig as config
 
 gpxHeader = """<?xml version="1.0" encoding="utf-8" standalone="yes"?>
@@ -67,6 +68,8 @@ def createTracks ( root, name ,cur ):
 			year = date.year
 			month = date. month
 			day = 0
+			oldlocation = None
+
 			#create new directorey if necessary:
 			path = os.path.join(root,"%04d/%02d/" % (year, month))
 			if(not os.path.isdir(path)):
@@ -97,6 +100,12 @@ def createTracks ( root, name ,cur ):
 		if file != None:
 			#write track point
 			location = location.split(",")
+			loctuple = (location[0], location[1])
+			if oldlocation != None:
+				d = distance.distance(loctuple, oldlocation)
+				#if d > 1:
+				#	print (date.strftime("%Y-%m-%dT%H:%M:%SZ"), d)
+			oldlocation = loctuple
 			file.write( gpxPoint % (location[0], location[1], date.strftime("%Y-%m-%dT%H:%M:%SZ")))
 		#continue with next way point
 	#finally close last track
@@ -131,5 +140,5 @@ for track in config.tracks:
 	createTracks( track.path, track.name, cur )
 
 config.closeDataBase(db)
-
+sys.exit(0)
 

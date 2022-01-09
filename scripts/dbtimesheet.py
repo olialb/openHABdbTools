@@ -12,6 +12,7 @@ import sys
 import os
 import csv
 import datetime
+
 import dbtoolsconfig as config
 
 def closeCvs(file):
@@ -145,10 +146,12 @@ def createTimeSheet ( root, name , delimiter, columns, cur ):
 	#finally close last track
 	closeCvs(file)
 
+
 #open tha data base
 db = config.openDataBase()
 # you must create a Cursor object. It will let you execute all the queries you need
 cur = db.cursor()
+
 
 #search the corresponding items for the tracks 
 for timeSheet in config.timeSheets:
@@ -179,6 +182,4 @@ for timeSheet in config.timeSheets:
 	createTimeSheet( timeSheet.path, timeSheet.name, str(config.delimiter), columns, cur )
 
 config.closeDataBase(db)
-
-
-
+sys.exit(0)

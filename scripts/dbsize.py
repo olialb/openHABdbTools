@@ -27,5 +27,5 @@ for item in cur.fetchall():
 
 #cleanup
 config.closeDataBase(db)
-sys.exit(size)
+sys.exit(0)
 
