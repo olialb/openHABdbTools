@@ -1,7 +1,7 @@
-# openHAB Data Base Tools (2022)
+# openHAB Data Base Tools (2023)
 
 ## Purpose of this little project
-This data base tools written in Python can be used  with [openHAB](https://www.openhab.org) data bases. This is tested now with Python 3 and openHAB 3.2
+This data base tools written in Python can be used  with [openHAB](https://www.openhab.org) data bases. This is tested now with Python 3 and [openHAB](https://www.openhab.org) 3 and 4
 The scripts are supporting:
 
 * **Data Base Maintenance**:
@@ -20,6 +20,9 @@ The scripts are supporting:
     * Reads all exiting items from [openHAB](https://www.openhab.org) over REST API, identifies the matching SQL tables with data and the matching json file from the given backup zipfile. Background: The table names are diffrent in the data base, but they are found over the item name and type. Only if both 100% matches the data is used.
     * Write the data from the json file to the new corresponding tables
 
+* **Creating Spreadsheets** (DBitemhistory.py):
+  * Spreadsheets with items history. You get an csv file with the history of a list of [openHAB](https://www.openhab.org) items combined in one sheet with timestamps.
+
 * **Creating Timesheets** of switch items. Together with GPS tracking this can be used to show entering and leaving of configured GPS areas but it can also for other use cases: (How long my Kitchen Light switched on every day?). 
   * Creating monthly CSV files from data base entries for [openHAB](https://www.openhab.org) [switch items](https://www.openhab.org/docs/configuration/items.html)
 
@@ -30,11 +33,11 @@ The scripts are supporting:
 ## What you need to use this project
 The following features must be supported by your [openHAB](https://www.openhab.org) instance that the scripts are working.
 
-* [openHAB](https://www.openhab.org) installation (tested with OH2.4 or newer and OH3)
+* [openHAB](https://www.openhab.org) installation (tested with OH2.4 or newer)
 * Instance must be connected to [myopenhab](https://myopenhab.org/) with [openHAB cloud connector](https://www.openhab.org/addons/integrations/openhabcloud/)
 * Running [persistance](https://www.openhab.org/docs/configuration/persistence.html) with SQL data base (tested with [mariadb](https://mariadb.org/) over [jdbc data persistance](https://www.openhab.org/addons/persistence/jdbc/))
 * Python installation on [openHAB](https://www.openhab.org) server with the following additional python packages
-  * mysqldb (Install with `sudo apt-get install python-mysqldb` or please `sudo apt-get install python3-mysqldb` for python 2)
+  * mysqldb (Install with `sudo apt-get install python-mysqldb` or please `sudo apt-get install python3-mysqldb` for python 3. On Windows give `pip install mysqlclient` a try.)
   * geopy (Intsall with `python -m pip install geopy` for python 2 or `python3 -m pip install geopy` for python 3)
 * If you want to use the gps tracking scripts you need the [openHAB gps tracking addon](https://www.openhab.org/addons/bindings/gpstracker/) and for example [Owntracks mobile app](https://owntracks.org/) to send your location to your [openHAB](https://www.openhab.org) instance.
 
