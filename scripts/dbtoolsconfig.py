@@ -36,7 +36,7 @@ try:
 	try:
 		rootPath = parser['root']['path']
 	except:
-		print ("Error w	ith 'path=' not defined in dbtools.cfg [root] section" )
+		print ("Error w	ith 'path=' not defined in dbtools.ini [root] section" )
 		quit()
 	try:
 		delimiter = parser['root']['delimiter']
@@ -50,25 +50,25 @@ except:
 try:
 	dbHost = parser['dbconfig']['host']
 except:
-	print ("Error with 'host=' not defined in dbtools.cfg [dbconfig] section" )
+	print ("Error with 'host=' not defined in dbtools.ini [dbconfig] section" )
 	quit()
 	
 try:
 	dbUser = parser['dbconfig']['user']
 except:
-	print ("Error with 'user=' not defined in dbtools.cfg [dbconfig] section" )
+	print ("Error with 'user=' not defined in dbtools.ini [dbconfig] section" )
 	quit()
 	
 try:
 	dbPassWord = parser['dbconfig']['password']
 except:
-	print ("Error with 'password=' not defined in dbtools.cfg [dbconfig] section" )
+	print ("Error with 'password=' not defined in dbtools.ini [dbconfig] section" )
 	quit()
 
 try:
 	dbTable = parser['dbconfig']['table']
 except:
-	print ("Error with 'table=' not defined in dbtools.cfg [dbconfig] section" )
+	print ("Error with 'table=' not defined in dbtools.ini [dbconfig] section" )
 	quit()
 	
 #dection maintenance
